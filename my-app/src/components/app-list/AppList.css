@@ -1,0 +1,21 @@
+.advert-list {
+  margin: 10px 0;
+  list-style: none;
+}
+.advert-list__item {
+  margin: 8px 0;
+  padding: 10px;
+  box-shadow: 0 1px 2px 0 #333;
+}
+.advert-list__item-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.advert-list__item-img {
+  height: 100px;
+}
+.advert-list__item-content,
+.advert-list__item-phone,
+.advert-list__item-town {
+  margin-bottom: 6px;
+}

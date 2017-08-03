@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  padding: 10px;
+}
+.header {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  background: #222;
+}
+.header__title {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+.header__img {
+	height: 80px;
+}
