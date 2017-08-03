@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
+import $ from 'jquery';
+import './AppForm.css';
 import TextInput from '../../util/TextInput.js';
 import Textarea from '../../util/Textarea.js';
 import Select from '../../util/Select.js';
-import update from 'immutability-helper';
 import { run, ruleRunner } from '../../validation/ruleRunner.js'
 import { required, maxLength, parsePhoneNumber } from '../../validation/rules.js';
-import './AppForm.css';
-import $ from 'jquery';
 
 const fieldValidations = [
   ruleRunner("title", "Title", required, maxLength(100)),
@@ -32,7 +32,7 @@ class AppForm extends Component {
     this.handleFieldChanged = this.handleFieldChanged.bind(this);    
     this.submit = this.submit.bind(this);
     this.errorFor = this.errorFor.bind(this);
-    this.previewFile = this.previewFile.bind(this);
+    this.loadFile = this.loadFile.bind(this);
   }
 
   componentWillMount() {
@@ -67,26 +67,22 @@ class AppForm extends Component {
     // After checking get input values, send object to answers array
     for (let prop in advert) {
       let elem = document.getElementById(prop);
-      advert[prop] = elem.value;
+      if (prop !== "img") advert[prop] = elem.value;
       elem.value = '';
     }
-    advert.img = 'data:image/png;base64,' + btoa(document.querySelector('.preview').getAttribute('src'));
     this.props.updateList(advert);
   }
 
-  previewFile() {
-    var preview = document.querySelector('.preview');
-    var file    = document.querySelector('.form__file-input').files[0];
-    var reader  = new FileReader();
+  loadFile() {
+    var file = document.querySelector('.form__file-input').files[0];
+    var reader = new FileReader();
 
     reader.onloadend = function () {
-      preview.src = reader.result;
+      advert.img = reader.result;
     }
 
     if (file) {
       reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
     }
   }
 
@@ -120,19 +116,17 @@ class AppForm extends Component {
                 showError={this.state.showErrors}
                 errorText={this.errorFor("town")}
                 onFieldChanged={this.handleFieldChanged("town")} />
-
         <div className="form__file-input-wrapper">
           <label className="form__label" htmlFor="img">Advert image</label>
           <input className="form__file-input"
                  type="file"
-                 onChange={this.previewFile}
+                 onChange={this.loadFile}
                  id="img"
                  name="img"
                  accept="image/jpeg,image/png,image/gif" />
-         <img className="preview" src="" height="200" />
         </div>
         <div className="form__btn">
-          <button className="form__submit" type="submit">Submit Advert</button>
+          <button className="btn form__submit" type="submit">Submit Advert</button>
         </div>
       </form>
     );
