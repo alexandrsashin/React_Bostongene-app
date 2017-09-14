@@ -1,0 +1,9 @@
+.removable-tag {
+  margin: 2px;
+  padding: 4px;
+  background: #56ccf9;
+  border-radius: 4px;
+}
+.removable-tag__cross {
+  margin: 4px;
+}
